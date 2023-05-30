@@ -1,6 +1,7 @@
 parserOptions:
   ecmaVersion: latest
   sourceType: 'module'
+  parser: '@babel/eslint-parser'
 
 env:
   es2017: true
