@@ -10,37 +10,44 @@ const Mode = {
 
 export default class TripPointPresenter {
   #handleModeChange = null;
+  #handleDataChange = null;
 
   #tripPointList = null;
   #editFormComponent = null;
   #tripPointComponent = null;
 
   #tripPoint = null;
-  #destination = null;
+  #destinations = null;
+  #offers = null;
   #mode = Mode.DEFAULT;
 
-  constructor({tripPointList, onModeChange}) {
+  constructor({tripPointList, onModeChange, onDataChange}) {
     this.#tripPointList = tripPointList;
     this.#handleModeChange = onModeChange;
+    this.#handleDataChange = onDataChange;
   }
 
-  init(tripPoint, destination) {
+  init(tripPoint, destinations, offers) {
     this.#tripPoint = tripPoint;
-    this.#destination = destination;
+    this.#destinations = destinations;
+    this.#offers = offers;
 
     const prevTripPointComponent = this.#tripPointComponent;
     const prevEditFormComponent = this.#editFormComponent;
 
     this.#tripPointComponent = new TripPointView({
       tripPoint: this.#tripPoint,
-      destination: this.#destination,
+      destinations: this.#destinations,
+      offers: this.#offers,
       onEditClick: this.#handleEditClick
     });
 
     this.#editFormComponent = new EditFormView({
       tripPoint: this.#tripPoint,
-      destination: this.#destination,
-      onFormSubmit: this.#handleFormSubmit
+      destinations: this.#destinations,
+      offers: this.#offers,
+      onFormSubmit: this.#handleFormSubmit,
+      onRollUpButton: this.#handleRollupButtonClick
     });
 
     if (prevTripPointComponent === null || prevEditFormComponent === null) {
@@ -67,6 +74,7 @@ export default class TripPointPresenter {
 
   resetView() {
     if (this.#mode !== Mode.DEFAULT) {
+      this.#editFormComponent.reset(this.#tripPoint);
       this.#replaceFormToPoint();
     }
   }
@@ -85,6 +93,7 @@ export default class TripPointPresenter {
   #ecsKeyDownHandler = (evt) => {
     if (isEscapeKey(evt)) {
       evt.preventDefault();
+      this.#editFormComponent.reset(this.#tripPoint);
       this.#replaceFormToPoint();
       document.body.removeEventListener('keydown', this.#ecsKeyDownHandler);
     }
@@ -96,7 +105,14 @@ export default class TripPointPresenter {
     document.body.addEventListener('keydown', this.#ecsKeyDownHandler);
   };
 
-  #handleFormSubmit = () => {
+  #handleFormSubmit = (tripPoint) => {
+    this.#handleDataChange(tripPoint);
+    this.#replaceFormToPoint();
+    document.body.removeEventListener('keydown', this.#ecsKeyDownHandler);
+  };
+
+  #handleRollupButtonClick = () => {
+    this.#editFormComponent.reset(this.#tripPoint);
     this.#replaceFormToPoint();
     document.body.removeEventListener('keydown', this.#ecsKeyDownHandler);
   };
