@@ -8,5 +8,4 @@ const getRandomOffersIdsByType = (type) => {
   return currentTypeRandomOffers.map((offer) => offer.id);
 };
 
-
 export {getRandomOffersIdsByType, getOffersByType };
