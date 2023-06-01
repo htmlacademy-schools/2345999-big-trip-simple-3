@@ -21,7 +21,6 @@ export default class TripPointModel extends Observable {
     } catch(err) {
       this.#tripPoints = [];
     }
-
     this._notify(UpdateType.INIT);
   }
 
@@ -48,28 +47,34 @@ export default class TripPointModel extends Observable {
     }
   }
 
-  addTripPoint(updateType, update) {
-    this.#tripPoints = [
-      update,
-      ...this.#tripPoints
-    ];
-
-    this._notify(updateType, update);
+  async addTripPoint(updateType, update) {
+    try {
+      const response = await this.#tripPointApiService.addTripPoint(update);
+      const newTripPoint = this.#adaptToClient(response);
+      this.#tripPoints = [newTripPoint, ...this.#tripPoints];
+      this._notify(updateType, newTripPoint);
+    } catch(err) {
+      throw new Error('Can\'t add tripPoint');
+    }
   }
 
-  deleteTripPoint(updateType, update) {
+  async deleteTripPoint(updateType, update) {
     const index = this.#tripPoints.findIndex((tripPoint) => tripPoint.id === update.id);
 
     if (index === -1) {
       throw new Error('Can\'t delete unexisting tripPoint');
     }
 
-    this.#tripPoints = [
-      ...this.tripPoints.slice(0, index),
-      ...this.#tripPoints.slice(index + 1),
-    ];
-
-    this._notify(updateType);
+    try {
+      await this.#tripPointApiService.deleteTripPoint(update);
+      this.#tripPoints = [
+        ...this.tripPoints.slice(0, index),
+        ...this.#tripPoints.slice(index + 1),
+      ];
+      this._notify(updateType);
+    } catch(err) {
+      throw new Error('Can\'t delete tripPoint');
+    }
   }
 
   #adaptToClient(tripPoint) {

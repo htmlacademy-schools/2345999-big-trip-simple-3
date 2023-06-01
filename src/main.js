@@ -9,7 +9,7 @@ import FilterModel from './model/filter-model.js';
 import {render} from './framework/render.js';
 import NewTripPointButtonView from './view/new-trip-point-button-view.js';
 
-import TripPointApiService from './trip-point-api-service.js';
+import TripPointApiService from './api/trip-point-api-service.js';
 
 const AUTHORIZATION = 'Basic daevka1307_4';
 const END_POINT = 'https://18.ecmascript.pages.academy/big-trip';
