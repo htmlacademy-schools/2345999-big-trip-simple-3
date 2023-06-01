@@ -185,6 +185,40 @@ const offersByType = [
   },
 ];
 
-const getOffersByType = (type) => offersByType.find((currentTypeOffers) => currentTypeOffers.type === type).offers;
+const getOffersByType = (type) => {
+  switch (type) {
+    case 'taxi':
+      return taxiOffers;
+    case 'bus':
+      return busOffers;
+    case 'train':
+      return trainOffers;
+    case 'ship':
+      return shipOffers;
+    case 'drive':
+      return driveOffers;
+    case 'flight':
+      return flightOffers;
+    case 'check-in':
+      return checkInOffers;
+    case 'sightseeing':
+      return sightseeingOffers;
+    case 'restaurant':
+      return restaurantOffers;
+  }
+};
 
-export { pointTypes, descriptionPhrases, namesOfPlaces, fromToDates, getOffersByType, offersByType};
+const FilterType = {
+  EVERYTHING: 'everything',
+  FUTURE: 'future'
+};
+
+const SortType = {
+  DAY: 'day',
+  EVENT: 'event',
+  TIME: 'time',
+  PRICE: 'price',
+  OFFERS: 'offers'
+};
+
+export { pointTypes, descriptionPhrases, namesOfPlaces, fromToDates, getOffersByType, offersByType, FilterType, SortType};
