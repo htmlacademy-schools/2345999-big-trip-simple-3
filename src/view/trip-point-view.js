@@ -4,7 +4,7 @@ import { convertToEventDateTime, convertToEventDate, convertToDateTime, convertT
 import AbstractView from '../framework/view/abstract-view.js';
 
 
-function createOffersTemplate(offers, offersIDs, type) {
+const createOffersTemplate = (offers, offersIDs, type) => {
   const currentTypeOffers = offers.find((el) => el.type === type).offers;
   return currentTypeOffers.filter((el) => offersIDs.includes(el.id)).map((offer) => `
     <li class="event__offer">
@@ -13,12 +13,12 @@ function createOffersTemplate(offers, offersIDs, type) {
       <span class="event__offer-price">${offer.price}</span>
     </li>`
   ).join('');
-}
+};
 
-function createTripPointTemplate(tripPoint, destinations, offers) {
+const createTripPointTemplate = (tripPoint, destinations, offers) => {
   const destination = getItemFromItemsById(destinations, tripPoint.destination);
-  return (
-    `<li class="trip-events__item">
+  return (`
+    <li class="trip-events__item">
     <div class="event">
       <time class="event__date" datetime="${convertToEventDateTime(tripPoint.dateFrom)}">${convertToEventDate(tripPoint.dateFrom)}</time>
       <div class="event__type">
@@ -45,7 +45,7 @@ function createTripPointTemplate(tripPoint, destinations, offers) {
     </div>
   </li>`
   );
-}
+};
 
 export default class TripPointView extends AbstractView {
   #tripPoint = null;
