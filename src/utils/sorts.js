@@ -12,4 +12,5 @@ const sorts = {
   [SortType.TIME]: (pointA, pointB) => dayjs(pointA.dateFrom).diff(dayjs(pointB.dateFrom)),
 };
 
+
 export { isDisabled, sorts };
