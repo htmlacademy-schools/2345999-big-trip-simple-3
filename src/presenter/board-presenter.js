@@ -93,7 +93,6 @@ export default class BoardPresenter {
     this.#uiBlocker.block();
     switch (actionType) {
       case UserAction.ADD_TRIPPOINT:
-        this.#tripPointPresenter.get(update.id).setSaving();
         try {
           await this.#tripPointsModel.addTripPoint(updateType, update);
         } catch(err) {
