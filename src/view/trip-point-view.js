@@ -72,5 +72,4 @@ export default class TripPointView extends AbstractView {
     evt.preventDefault();
     this._callback.onEditClick();
   };
-
 }

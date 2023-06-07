@@ -8,8 +8,8 @@ import 'flatpickr/dist/flatpickr.min.css';
 
 const BLANK_TRIPPOINT = {
   basePrice: 999,
-  dateFrom: '2019-07-18T20:20:13.375Z',
-  dateTo: '2019-07-18T21:40:13.375Z',
+  dateFrom: '2023-06-07T22:00:00.375Z',
+  dateTo: '2023-06-07T23:40:00.375Z',
   destination: undefined,
   id: 0,
   offersIDs: [],
@@ -92,7 +92,6 @@ const getDeleteTitle = (isEditForm, isDeleting) => {
   }
   return (isDeleting) ? 'Deleting...' : 'Delete';
 };
-
 
 const createEditFormTemplate = (tripPoint, destinations, offers, isEditForm) => {
   if (!tripPoint.destination) {
@@ -179,8 +178,6 @@ export default class EditFormView extends AbstractStatefulView {
 
   removeElement() {
     super.removeElement();
-
-
     if (this.#fromDatepicker) {
       this.#fromDatepicker.destroy();
       this.#fromDatepicker = null;

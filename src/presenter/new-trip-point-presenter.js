@@ -79,7 +79,6 @@ export default class NewTripPointPresenter {
     this.#handleDataChange(
       UserAction.ADD_TRIPPOINT,
       UpdateType.MINOR,
-
       this.#deleteId(tripPoint)
     );
 

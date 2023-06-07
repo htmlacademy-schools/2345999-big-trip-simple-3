@@ -167,6 +167,4 @@ export default class TripPointPresenter {
       tripPoint,
     );
   };
-
-
 }
