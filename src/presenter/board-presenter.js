@@ -52,7 +52,6 @@ export default class BoardPresenter {
       onDataChange: this.#handleViewAction,
       onDestroy: onNewTripPointDestroy
     });
-
     this.#tripPointsModel.addObserver(this.#handleModelEvent);
     this.#filterModel.addObserver(this.#handleModelEvent);
 
@@ -74,7 +73,6 @@ export default class BoardPresenter {
   }
 
   init() {
-
     this.#renderBoard();
   }
 
@@ -85,7 +83,6 @@ export default class BoardPresenter {
     if(this.#noTripPointComponent) {
       remove(this.#noTripPointComponent);
     }
-
     this.#newTripPointPresenter.init(this.destinations, this.offers);
   }
 
@@ -116,13 +113,10 @@ export default class BoardPresenter {
         }
         break;
     }
-
     this.#uiBlocker.unblock();
-
   };
 
   #handleModelEvent = (updateType, data) => {
-
     switch(updateType) {
       case UpdateType.PATCH:
         this.#tripPointPresenter.get(data.id).init(data, this.destinations, this.offers);
@@ -159,7 +153,6 @@ export default class BoardPresenter {
     this.#tripPointPresenter.forEach((presenter) => presenter.resetView());
   };
 
-
   #handleSortTypeChange = (sortType) => {
     if (this.#currentSortType === sortType) {
       return;
@@ -171,13 +164,11 @@ export default class BoardPresenter {
   };
 
   #renderSort() {
-
     this.#sortComponent = new SortView({
       currentSortType: this.#currentSortType,
       onSortTypeChange: this.#handleSortTypeChange
     });
     render(this.#sortComponent, this.#boardContainer, RenderPosition.AFTERBEGIN);
-
   }
 
   #renderTripPoint(tripPoint) {
@@ -194,11 +185,9 @@ export default class BoardPresenter {
 
   #renderTripPoints(tripPoints) {
     tripPoints.forEach((tripPoint) => this.#renderTripPoint(tripPoint));
-
   }
 
   #clearBoard(resetSortType = false) {
-
     this.#newTripPointPresenter.destroy();
     this.#tripPointPresenter.forEach((presenter) => presenter.destroy());
     this.#tripPointPresenter.clear();
@@ -231,7 +220,6 @@ export default class BoardPresenter {
     this.#renderSort();
     render(this.#tripPointsListComponent, this.#boardContainer);
     this.#renderTripPoints(tripPoints);
-
   }
 
 }
