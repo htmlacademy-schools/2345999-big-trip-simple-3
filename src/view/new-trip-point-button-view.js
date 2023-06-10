@@ -1,9 +1,9 @@
 import AbstractView from '../framework/view/abstract-view.js';
+
 const createNewTripPointButtonTemplate = () => (' <button class="trip-main__event-add-btn  btn  btn--big  btn--yellow" type="button">New event</button>');
 
 export default class NewTripPointButtonView extends AbstractView {
   #handleClick = null;
-
   constructor({onClick}) {
     super();
     this.#handleClick = onClick;
@@ -16,6 +16,10 @@ export default class NewTripPointButtonView extends AbstractView {
 
   #clickHandler = (evt) => {
     evt.preventDefault();
-    this.#handleClick();
+    try {
+      this.#handleClick();
+    } catch (e) {
+      alert('Oops...Something went wrong');
+    }
   };
 }
