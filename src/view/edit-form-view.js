@@ -325,7 +325,7 @@ export default class EditFormView extends AbstractStatefulView {
       currentTypeOffers = currentTypes.offers;
     } catch (err) { location.reload(); }
     return {...tripPoint,
-      currentTypeOffers: offers.find((el) => el.type === tripPoint.type).offers,
+      currentTypeOffers,
       isDisabled: false,
       isSaving: false,
       isDeleting: false,
