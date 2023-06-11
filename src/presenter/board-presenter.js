@@ -72,8 +72,8 @@ export default class BoardPresenter {
     return this.#offersModel.offers;
   }
 
-  init() {
-    this.#renderBoard();
+  async init() {
+    await this.#renderBoard();
   }
 
   createTripPoint() {
@@ -131,21 +131,21 @@ export default class BoardPresenter {
         break;
       case UpdateType.INIT:
         this.#isLoading = false;
-        remove(this.#loadingComponent);
-        this.#renderBoard();
+        setTimeout(() => remove(this.#loadingComponent),900);
+        setTimeout(() => this.#renderBoard(),1000);
         break;
     }
   };
 
   #renderLoading() {
-    render(this.#loadingComponent, this.#boardContainer, RenderPosition.AFTERBEGIN);
+    setTimeout(() => render(this.#loadingComponent, this.#boardContainer, RenderPosition.AFTERBEGIN),100);
   }
 
   #renderNoTripPoints() {
     this.#noTripPointComponent = new NoPointsView({
       filterType: this.#filterType
     });
-    render(this.#noTripPointComponent, this.#boardContainer, RenderPosition.AFTERBEGIN );
+    setTimeout(() => render(this.#noTripPointComponent, this.#boardContainer, RenderPosition.AFTERBEGIN ),2000);
   }
 
   #handleModeChange = () => {
@@ -168,7 +168,7 @@ export default class BoardPresenter {
       currentSortType: this.#currentSortType,
       onSortTypeChange: this.#handleSortTypeChange
     });
-    render(this.#sortComponent, this.#boardContainer, RenderPosition.AFTERBEGIN);
+    setTimeout(() => render(this.#sortComponent, this.#boardContainer, RenderPosition.AFTERBEGIN),2000);
   }
 
   #renderTripPoint(tripPoint) {
@@ -177,7 +177,6 @@ export default class BoardPresenter {
       onModeChange: this.#handleModeChange,
       onDataChange: this.#handleViewAction
     });
-
     tripPoinPresenter.init(tripPoint, this.destinations, this.offers);
     this.#tripPointPresenter.set(tripPoint.id, tripPoinPresenter);
   }
@@ -204,13 +203,12 @@ export default class BoardPresenter {
     }
   }
 
-  #renderBoard() {
-
+  async #renderBoard() {
     if(this.#isLoading) {
       this.#renderLoading();
       return;
     }
-    const tripPoints = this.tripPoints;
+    const tripPoints = await this.tripPoints;
 
     if (tripPoints.length === 0) {
       this.#renderNoTripPoints();
@@ -218,8 +216,11 @@ export default class BoardPresenter {
     }
 
     this.#renderSort();
-    render(this.#tripPointsListComponent, this.#boardContainer);
+    setTimeout(() => render(this.#tripPointsListComponent, this.#boardContainer),2000);
+
+    try{
     this.#renderTripPoints(tripPoints);
+    }catch(err) { location.reload(); }
   }
 
 }

@@ -29,8 +29,8 @@ export default class NewTripPointPresenter {
       isEditForm: false
     });
 
-    render(this.#tripPointEditComponent, this.#tripPointListContainer,
-      RenderPosition.AFTERBEGIN);
+    setTimeout(() => render(this.#tripPointEditComponent, this.#tripPointListContainer,
+      RenderPosition.AFTERBEGIN),2000);
 
     document.body.addEventListener('keydown', this.#ecsKeyDownHandler);
   }
