@@ -61,8 +61,7 @@ export default class TripPointView extends AbstractView {
     this.#destinations = destinations;
     this.#offers = offers;
     this._callback.onEditClick = onEditClick;
-      setTimeout(() => this.element.querySelector('.event__rollup-btn')
-      .addEventListener('click', this.#editClickHandler),2000);
+    setTimeout(() => this.element.querySelector('.event__rollup-btn').addEventListener('click', this.#editClickHandler),2000);
   }
 
   get template() {

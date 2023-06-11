@@ -219,8 +219,10 @@ export default class BoardPresenter {
     setTimeout(() => render(this.#tripPointsListComponent, this.#boardContainer),2000);
 
     try{
-    this.#renderTripPoints(tripPoints);
-    }catch(err) { location.reload(); }
+      this.#renderTripPoints(tripPoints);
+    }catch(err) {
+      location.reload();
+    }
   }
 
 }
