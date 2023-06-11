@@ -54,7 +54,7 @@ export default class TripPointPresenter {
     });
 
     if (prevTripPointComponent === null || prevEditFormComponent === null) {
-      render(this.#tripPointComponent, this.#tripPointList);
+      setTimeout(() => render(this.#tripPointComponent, this.#tripPointList),2000);
       return;
     }
 

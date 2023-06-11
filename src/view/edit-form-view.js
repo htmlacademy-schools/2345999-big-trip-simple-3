@@ -1,4 +1,4 @@
-import { capitalizeType, getItemFromItemsById } from '../utils/utils.js';
+import {capitalizeType, getItemFromItemsById} from '../utils/utils.js';
 import AbstractStatefulView from '../framework/view/abstract-stateful-view.js';
 import { convertToBasicime } from '../utils/formatTime-Utils.js';
 import { pointTypes } from '../const.js';
@@ -6,16 +6,16 @@ import he from 'he';
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 
+
 const BLANK_TRIPPOINT = {
   basePrice: 999,
-  dateFrom: '2023-06-07T22:00:00.375Z',
-  dateTo: '2023-06-07T23:40:00.375Z',
+  dateFrom: (new Date()).toISOString(),
+  dateTo: (new Date((new Date()).getTime() + 3600000)).toISOString(),
   destination: undefined,
   id: 0,
   offersIDs: [],
-  type: 'flight'
+  type: pointTypes[Math.floor(Math.random() * pointTypes.length)]
 };
-
 
 const createDestinationPicsTemplate = (destination) => (destination.pictures
   .map((pic) => `
@@ -49,7 +49,11 @@ const createOffersTemplate = (currentTypeOffers, checkedOffers, id, isDisabled) 
 );
 
 const createEventDetailsTemplate = (tripPoint, destination, offers, isDisabled) => {
-  const currentTypeOffers = offers.find((el) => el.type === tripPoint.type).offers;
+  const currentTypes = offers.find((el) => el.type === tripPoint.type);
+  let currentTypeOffers = [];
+  if (currentTypes) {
+    currentTypeOffers = currentTypes.offers;
+  }
   return `
   <section class="event__section  event__section--offers ${(currentTypeOffers.length === 0) ? 'visually-hidden' : ''}" >
     <h3 class="event__section-title  event__section-title--offers">Offers</h3>
@@ -164,6 +168,10 @@ export default class EditFormView extends AbstractStatefulView {
 
   constructor({tripPoint = BLANK_TRIPPOINT, destinations, offers, onFormSubmit, onRollUpButton, isEditForm = true, onDeleteClick}) {
     super();
+    if (tripPoint === BLANK_TRIPPOINT) {
+      tripPoint.destination = Math.floor(Math.random() * destinations.length);
+      tripPoint.type = pointTypes[Math.floor(Math.random() * pointTypes.length)];
+    }
     this._setState(EditFormView.parseTripPointToState(tripPoint, offers));
 
     this.#destinations = destinations;
